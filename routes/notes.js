@@ -9,7 +9,6 @@ const router = Router()
 router.get('/', async (req, res) => {
     try {
         const notes = await Notes.fetchData()
-        notes.forEach(note => delete note.descr)
 
         res.json({ notes })
     } catch(e) {
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such user' })
+        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such item' })
         const notes = await Notes.fetchData()
         const ind = await Notes.findById(req.params.id)
 
@@ -68,7 +67,7 @@ router.put('/:id', validators, async (req, res) => {
         }
 
         if(!req.body.title || !req.body.descr) return res.json({ message: 'title and descr are undefined' })
-        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such user' })
+        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such item' })
 
         await Notes.updateNote(req.params.id, req.body.title,  req.body.descr)
 
@@ -83,7 +82,7 @@ router.put('/:id', validators, async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such user' })
+        if(await is404(req.params.id)) return res.status(404).json({ error: 'no such item' })
         await Notes.removeNote(req.params.id)
 
         res.json({
