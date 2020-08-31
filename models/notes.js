@@ -3,11 +3,6 @@ const fs = require('fs')
 
 class Notes {
 
-    title = undefined
-    id = undefined
-    date = undefined
-    descr = undefined
-
     constructor(note) {
         this.title = note.title
         this.id = note.id,
